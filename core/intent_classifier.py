@@ -13,8 +13,6 @@ from core.state import AgentType
 class IntentCategory(str, Enum):
     """Predefined intent categories mapped to agent types."""
     RESEARCH = "research"
-    CODING = "coding"
-    WRITING = "writing"
     DATA_ANALYSIS = "data_analysis"
     GENERAL = "general"
 
@@ -25,8 +23,6 @@ class IntentClassifier:
     # Intent to agent mapping
     INTENT_AGENT_MAP = {
         IntentCategory.RESEARCH: AgentType.RESEARCH,
-        IntentCategory.CODING: AgentType.CODE,
-        IntentCategory.WRITING: AgentType.WRITING,
         IntentCategory.DATA_ANALYSIS: AgentType.DATA,
         IntentCategory.GENERAL: AgentType.SUPERVISOR,  # Fallback to supervisor
     }
@@ -41,8 +37,6 @@ class IntentClassifier:
 
 Available intent categories:
 - RESEARCH: Information gathering, web search, fact-checking, literature review, knowledge retrieval
-- CODING: Programming tasks, debugging, code review, technical implementation, software development
-- WRITING: Content creation, editing, documentation, creative writing, communication
 - DATA_ANALYSIS: Data processing, statistics, visualization, analysis, reporting
 - GENERAL: Conversations, greetings, unclear requests, or requests that don't fit other categories
 
@@ -166,20 +160,6 @@ Be decisive but honest about uncertainty. Use GENERAL for ambiguous cases."""
                 "Literature and document analysis",
                 "Knowledge base queries",
                 "Market research and trends"
-            ],
-            AgentType.CODE: [
-                "Programming in multiple languages",
-                "Code debugging and optimization",
-                "Architecture and design patterns",
-                "Testing and quality assurance",
-                "API development and integration"
-            ],
-            AgentType.WRITING: [
-                "Content creation and editing",
-                "Documentation and technical writing",
-                "Creative writing and storytelling",
-                "Communication and messaging",
-                "Proofreading and style improvement"
             ],
             AgentType.DATA: [
                 "Data analysis and statistics",

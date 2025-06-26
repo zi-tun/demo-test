@@ -29,20 +29,14 @@ class MultiAgentGraphBuilder:
         # Import agents here to avoid circular imports
         from agents.supervisor import SupervisorAgent
         from agents.research_agent import ResearchAgent
-        from agents.code_agent import CodeAgent
-        from agents.writing_agent import WritingAgent
         from agents.data_agent import DataAgent
         
         self.supervisor = SupervisorAgent()
         self.research_agent = ResearchAgent()
-        self.code_agent = CodeAgent()
-        self.writing_agent = WritingAgent()
         self.data_agent = DataAgent()
         
         # Register agents with supervisor
         self.supervisor.register_agent(self.research_agent)
-        self.supervisor.register_agent(self.code_agent)
-        self.supervisor.register_agent(self.writing_agent)
         self.supervisor.register_agent(self.data_agent)
         
         self.graph = None
@@ -61,8 +55,6 @@ class MultiAgentGraphBuilder:
         # Add agent nodes
         workflow.add_node("supervisor", self._supervisor_node)
         workflow.add_node("research", self._research_node)
-        workflow.add_node("code", self._code_node)
-        workflow.add_node("writing", self._writing_node)
         workflow.add_node("data", self._data_node)
         
         # Set entry point
@@ -75,8 +67,6 @@ class MultiAgentGraphBuilder:
             {
                 AgentType.SUPERVISOR.value: END,
                 AgentType.RESEARCH.value: "research",
-                AgentType.CODE.value: "code",
-                AgentType.WRITING.value: "writing",
                 AgentType.DATA.value: "data",
                 "END": END
             }
@@ -84,8 +74,6 @@ class MultiAgentGraphBuilder:
         
         # All specialized agents return to END
         workflow.add_edge("research", END)
-        workflow.add_edge("code", END)
-        workflow.add_edge("writing", END)
         workflow.add_edge("data", END)
         
         # Compile the graph
@@ -108,24 +96,6 @@ class MultiAgentGraphBuilder:
             return updated_state.dict()
         except Exception as e:
             state.record_error(f"Research node error: {str(e)}")
-            return state.dict()
-    
-    def _code_node(self, state: WorkflowState) -> Dict[str, Any]:
-        """Process state through the code agent."""
-        try:
-            updated_state = self.code_agent.process_request(state)
-            return updated_state.dict()
-        except Exception as e:
-            state.record_error(f"Code node error: {str(e)}")
-            return state.dict()
-    
-    def _writing_node(self, state: WorkflowState) -> Dict[str, Any]:
-        """Process state through the writing agent."""
-        try:
-            updated_state = self.writing_agent.process_request(state)
-            return updated_state.dict()
-        except Exception as e:
-            state.record_error(f"Writing node error: {str(e)}")
             return state.dict()
     
     def _data_node(self, state: WorkflowState) -> Dict[str, Any]:
@@ -154,10 +124,6 @@ class MultiAgentGraphBuilder:
         # Route to the determined agent
         if state.current_agent == AgentType.RESEARCH:
             return AgentType.RESEARCH.value
-        elif state.current_agent == AgentType.CODE:
-            return AgentType.CODE.value
-        elif state.current_agent == AgentType.WRITING:
-            return AgentType.WRITING.value
         elif state.current_agent == AgentType.DATA:
             return AgentType.DATA.value
         else:
@@ -225,16 +191,6 @@ class MultiAgentGraphBuilder:
                     "description": self.research_agent.description,
                     "capabilities": self.research_agent.get_capabilities()
                 },
-                "code": {
-                    "name": self.code_agent.name,
-                    "description": self.code_agent.description,
-                    "capabilities": self.code_agent.get_capabilities()
-                },
-                "writing": {
-                    "name": self.writing_agent.name,
-                    "description": self.writing_agent.description,
-                    "capabilities": self.writing_agent.get_capabilities()
-                },
                 "data": {
                     "name": self.data_agent.name,
                     "description": self.data_agent.description,
@@ -259,8 +215,6 @@ class MultiAgentGraphBuilder:
         agent_map = {
             AgentType.SUPERVISOR: self.supervisor,
             AgentType.RESEARCH: self.research_agent,
-            AgentType.CODE: self.code_agent,
-            AgentType.WRITING: self.writing_agent,
             AgentType.DATA: self.data_agent
         }
         return agent_map.get(agent_type)
@@ -311,13 +265,11 @@ class MultiAgentGraphBuilder:
             self.build_graph()
         
         return {
-            "nodes": ["supervisor", "research", "code", "writing", "data"],
+            "nodes": ["supervisor", "research", "data"],
             "entry_point": "supervisor",
             "routing_conditions": {
                 "supervisor": {
                     "research": "Research and information gathering tasks",
-                    "code": "Programming and coding tasks", 
-                    "writing": "Content creation and writing tasks",
                     "data": "Data analysis and visualization tasks",
                     "END": "General conversation and coordination"
                 }

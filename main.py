@@ -18,43 +18,20 @@ import tools  # This will auto-register tools
 
 def setup_environment():
     """Load environment variables and validate configuration."""
-    # Load environment variables
-    load_dotenv()
-    
-    # Check for demo mode
-    if os.getenv("DEMO_MODE", "").lower() in ["true", "1", "yes"]:
-        print("🎭 Demo Mode: Running with mock responses (no real API calls)")
-        return True
-    
-    # Check for required API keys
-    has_openai = bool(os.getenv("OPENAI_API_KEY"))
-    has_anthropic = bool(os.getenv("ANTHROPIC_API_KEY"))
-    
     # Check for Cisco OpenAI configuration
-    has_cisco_openai = False
     try:
         from utils.llm_client import CiscoOpenAIClient
         cisco_client = CiscoOpenAIClient()
-        has_cisco_openai = cisco_client.is_available()
-    except:
-        has_cisco_openai = False
-    
-    if not has_openai and not has_anthropic and not has_cisco_openai:
-        print("⚠️  Warning: No LLM API keys found!")
-        print("Please set either OPENAI_API_KEY or ANTHROPIC_API_KEY in your .env file")
-        print("Or configure Cisco OpenAI in config/openai.properties")
-        print("Copy .env.example to .env and add your API keys")
-        print("Or set DEMO_MODE=true in .env to run with mock responses")
+        if cisco_client.is_available():
+            print("✅ Cisco Enterprise OpenAI configured")
+            return True
+        else:
+            print("⚠️  Warning: Cisco OpenAI not properly configured!")
+            print("Please configure Cisco OpenAI in config/openai.properties")
+            return False
+    except Exception as e:
+        print(f"❌ Failed to initialize Cisco OpenAI: {str(e)}")
         return False
-    
-    if has_openai:
-        print("✅ OpenAI API key found")
-    if has_anthropic:
-        print("✅ Anthropic API key found")
-    if has_cisco_openai:
-        print("✅ Cisco Enterprise OpenAI configured")
-    
-    return True
 
 
 class MultiAgentCLI:
@@ -75,7 +52,7 @@ class MultiAgentCLI:
         """Run interactive CLI session."""
         print("🤖 LangGraph Multi-Agent Orchestration System")
         print("=" * 50)
-        print("Available agents: Research, Code, Writing, Data, Supervisor")
+        print("Available agents: Research, Data, Supervisor")
         print("Type 'help' for commands, 'quit' to exit")
         print()
         

@@ -14,8 +14,6 @@ import json
 class ToolCategory(Enum):
     """Categories of tools available in the system."""
     RESEARCH = "research"
-    CODE = "code"
-    WRITING = "writing"
     DATA = "data"
     COMMUNICATION = "communication"
     FILE_SYSTEM = "file_system"
@@ -85,7 +83,7 @@ class ToolRegistry:
             self.tools_by_category[category] = []
         
         # Initialize common agent types
-        for agent_type in ["supervisor", "research", "code", "writing", "data"]:
+        for agent_type in ["supervisor", "research", "data"]:
             self.tools_by_agent[agent_type] = []
     
     def register_tool(self, tool: BaseTool) -> None:

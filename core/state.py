@@ -13,8 +13,6 @@ class AgentType(str, Enum):
     """Available agent types in the system."""
     SUPERVISOR = "supervisor"
     RESEARCH = "research"
-    CODE = "code"
-    WRITING = "writing"
     DATA = "data"
 
 

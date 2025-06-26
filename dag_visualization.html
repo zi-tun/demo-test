@@ -72,14 +72,10 @@ graph TD
     START([START]) --> SUPERVISOR[Supervisor Agent<br/>Intent Classification]
     
     SUPERVISOR -->|Research Intent| RESEARCH[Research Agent<br/>Web Search & Analysis]
-    SUPERVISOR -->|Code Intent| CODE[Code Agent<br/>Programming & Scripts]
-    SUPERVISOR -->|Writing Intent| WRITING[Writing Agent<br/>Content Creation]
     SUPERVISOR -->|Data Intent| DATA[Data Agent<br/>Analysis & Visualization]
     SUPERVISOR -->|General Intent| END_SUPER([END])
     
     RESEARCH --> END_R([END])
-    CODE --> END_C([END])
-    WRITING --> END_W([END])
     DATA --> END_D([END])
     
     %% Styling
@@ -88,8 +84,8 @@ graph TD
     classDef endpoints fill:#99ff99,stroke:#333,stroke-width:2px
     
     class SUPERVISOR supervisor
-    class RESEARCH,CODE,WRITING,DATA agents
-    class END_SUPER,END_R,END_C,END_W,END_D endpoints
+    class RESEARCH,DATA agents
+    class END_SUPER,END_R,END_D endpoints
             </div>
         </div>
         
@@ -107,26 +103,14 @@ graph TD
             </div>
             
             <div class="agent-card">
-                <h3>💻 Code Agent</h3>
-                <p><strong>Role:</strong> Programming and script generation</p>
-                <p><strong>Tools:</strong> Code execution, syntax validation, debugging</p>
-            </div>
-            
-            <div class="agent-card">
-                <h3>✍️ Writing Agent</h3>
-                <p><strong>Role:</strong> Content creation and editing</p>
-                <p><strong>Tools:</strong> Text generation, grammar checking, style optimization</p>
-            </div>
-            
-            <div class="agent-card">
-                <h3>📊 Data Agent</h3>
+                <h3> Data Agent</h3>
                 <p><strong>Role:</strong> Data analysis and visualization</p>
                 <p><strong>Tools:</strong> Chart generation, statistical analysis, data processing</p>
             </div>
         </div>
         
         <div class="info">
-            <strong>Generated:</strong> 2025-06-26 13:55:44<br>
+            <strong>Generated:</strong> 2025-06-26 15:29:49<br>
             <strong>Provider:</strong> Cisco Enterprise OpenAI<br>
             <strong>System:</strong> LangGraph Multi-Agent Orchestration
         </div>

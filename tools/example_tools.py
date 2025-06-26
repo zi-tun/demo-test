@@ -75,7 +75,7 @@ class CodeExecutorTool(BaseTool):
         metadata = ToolMetadata(
             name="code_executor",
             description="Execute code in a safe sandboxed environment",
-            category=ToolCategory.CODE,
+            category=ToolCategory.UTILITY,
             parameters={
                 "code": {"type": "string", "required": True, "description": "Code to execute"},
                 "language": {"type": "string", "default": "python", "description": "Programming language"},
@@ -91,7 +91,7 @@ class CodeExecutorTool(BaseTool):
                 "code_executor(code='console.log(\"Hello\");', language='javascript')"
             ],
             requirements=["sandboxed_environment", "runtime_engines"],
-            agent_types=["code", "supervisor"]
+            agent_types=["data", "supervisor"]
         )
         super().__init__(metadata)
     
@@ -137,7 +137,7 @@ class FileManagerTool(BaseTool):
                 "file_manager(action='list', path='/path/to/directory')"
             ],
             requirements=["file_system_access"],
-            agent_types=["code", "data", "supervisor"]
+            agent_types=["data", "supervisor"]
         )
         super().__init__(metadata)
     
@@ -235,7 +235,7 @@ class TextSummarizerTool(BaseTool):
         metadata = ToolMetadata(
             name="text_summarizer",
             description="Summarize long text content into key points",
-            category=ToolCategory.WRITING,
+            category=ToolCategory.UTILITY,
             parameters={
                 "text": {"type": "string", "required": True, "description": "Text to summarize"},
                 "max_length": {"type": "integer", "default": 200, "description": "Maximum summary length"},
@@ -251,7 +251,7 @@ class TextSummarizerTool(BaseTool):
                 "text_summarizer(text='Research paper...', style='paragraph')"
             ],
             requirements=["nlp_library"],
-            agent_types=["writing", "research", "supervisor"]
+            agent_types=["research", "supervisor"]
         )
         super().__init__(metadata)
     

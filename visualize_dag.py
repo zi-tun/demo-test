@@ -39,15 +39,15 @@ class DAGVisualizer:
         print("         ┌──────────┼──────────┐")
         print("         │          │          │")
         print("         ▼          ▼          ▼")
-        print("   ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐")
-        print("   │ RESEARCH │ │   CODE   │ │ WRITING  │ │   DATA   │")
-        print("   │  AGENT   │ │  AGENT   │ │  AGENT   │ │  AGENT   │")
-        print("   └─────┬────┘ └─────┬────┘ └─────┬────┘ └─────┬────┘")
-        print("         │            │            │            │")
-        print("         └──────────┬─┴──────────┬─┴────────────┘")
-        print("                    │            │")
-        print("                    ▼            ▼")
-        print("                        END")
+        print("   ┌──────────┐ ┌──────────┐")
+        print("   │ RESEARCH │ │   DATA   │")
+        print("   │  AGENT   │ │  AGENT   │")
+        print("   └─────┬────┘ └─────┬────┘")
+        print("         │            │")
+        print("         └──────────┬─┘")
+        print("                    │")
+        print("                    ▼")
+        print("                   END")
         print()
         print("🔀 Routing Logic:")
         print("   • Supervisor uses LLM-based intent classification")
@@ -62,14 +62,10 @@ graph TD
     START([START]) --> SUPERVISOR[Supervisor Agent<br/>Intent Classification]
     
     SUPERVISOR -->|Research Intent| RESEARCH[Research Agent<br/>Web Search & Analysis]
-    SUPERVISOR -->|Code Intent| CODE[Code Agent<br/>Programming & Scripts]
-    SUPERVISOR -->|Writing Intent| WRITING[Writing Agent<br/>Content Creation]
     SUPERVISOR -->|Data Intent| DATA[Data Agent<br/>Analysis & Visualization]
     SUPERVISOR -->|General Intent| END_SUPER([END])
     
     RESEARCH --> END_R([END])
-    CODE --> END_C([END])
-    WRITING --> END_W([END])
     DATA --> END_D([END])
     
     %% Styling
@@ -78,8 +74,8 @@ graph TD
     classDef endpoints fill:#99ff99,stroke:#333,stroke-width:2px
     
     class SUPERVISOR supervisor
-    class RESEARCH,CODE,WRITING,DATA agents
-    class END_SUPER,END_R,END_C,END_W,END_D endpoints
+    class RESEARCH,DATA agents
+    class END_SUPER,END_R,END_D endpoints
 """
         return mermaid.strip()
     
@@ -175,19 +171,7 @@ graph TD
             </div>
             
             <div class="agent-card">
-                <h3>💻 Code Agent</h3>
-                <p><strong>Role:</strong> Programming and script generation</p>
-                <p><strong>Tools:</strong> Code execution, syntax validation, debugging</p>
-            </div>
-            
-            <div class="agent-card">
-                <h3>✍️ Writing Agent</h3>
-                <p><strong>Role:</strong> Content creation and editing</p>
-                <p><strong>Tools:</strong> Text generation, grammar checking, style optimization</p>
-            </div>
-            
-            <div class="agent-card">
-                <h3>📊 Data Agent</h3>
+                <h3> Data Agent</h3>
                 <p><strong>Role:</strong> Data analysis and visualization</p>
                 <p><strong>Tools:</strong> Chart generation, statistical analysis, data processing</p>
             </div>
@@ -229,7 +213,7 @@ graph TD
         
         # Nodes
         print("\n🔶 Nodes:")
-        nodes = ["supervisor", "research", "code", "writing", "data"]
+        nodes = ["supervisor", "research", "data"]
         for node in nodes:
             print(f"  • {node}")
         
@@ -237,21 +221,15 @@ graph TD
         print("\n🔗 Edges:")
         print("  • START → supervisor (entry point)")
         print("  • supervisor → research (conditional)")
-        print("  • supervisor → code (conditional)")
-        print("  • supervisor → writing (conditional)")
         print("  • supervisor → data (conditional)")
         print("  • supervisor → END (conditional)")
         print("  • research → END")
-        print("  • code → END")
-        print("  • writing → END")
         print("  • data → END")
         
         # Routing conditions
         print("\n🎛️  Routing Conditions:")
         print("  • supervisor routes based on intent classification")
         print("  • research: information gathering, web search")
-        print("  • code: programming tasks, scripts, debugging")
-        print("  • writing: content creation, documentation")
         print("  • data: analysis, visualization, statistics")
         print("  • END: general conversation, coordination")
     
@@ -279,18 +257,6 @@ graph TD
                     "description": "Information gathering and analysis"
                 },
                 {
-                    "id": "code",
-                    "type": "agent",
-                    "label": "Code Agent", 
-                    "description": "Programming and script generation"
-                },
-                {
-                    "id": "writing",
-                    "type": "agent",
-                    "label": "Writing Agent",
-                    "description": "Content creation and editing"
-                },
-                {
                     "id": "data",
                     "type": "agent",
                     "label": "Data Agent",
@@ -300,13 +266,9 @@ graph TD
             "edges": [
                 {"from": "START", "to": "supervisor", "type": "entry"},
                 {"from": "supervisor", "to": "research", "type": "conditional", "condition": "research_intent"},
-                {"from": "supervisor", "to": "code", "type": "conditional", "condition": "code_intent"},
-                {"from": "supervisor", "to": "writing", "type": "conditional", "condition": "writing_intent"},
                 {"from": "supervisor", "to": "data", "type": "conditional", "condition": "data_intent"},
                 {"from": "supervisor", "to": "END", "type": "conditional", "condition": "general_intent"},
                 {"from": "research", "to": "END", "type": "terminal"},
-                {"from": "code", "to": "END", "type": "terminal"},
-                {"from": "writing", "to": "END", "type": "terminal"},
                 {"from": "data", "to": "END", "type": "terminal"}
             ],
             "routing_logic": {
@@ -314,8 +276,6 @@ graph TD
                     "method": "llm_intent_classification",
                     "routes": {
                         "research": ["research", "search", "information", "find", "lookup"],
-                        "code": ["code", "program", "script", "function", "debug"],
-                        "writing": ["write", "content", "document", "article", "edit"],
                         "data": ["data", "analyze", "chart", "visualize", "statistics"],
                         "END": ["general", "conversation", "hello", "help"]
                     }

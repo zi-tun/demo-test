@@ -4,11 +4,10 @@ Contains LLM client abstractions and error handling utilities.
 """
 
 from .llm_client import (
-    LLMClientFactory, 
     get_default_llm_client,
     LLMMessage,
-    LLMProvider,
-    BaseLLMClient
+    CiscoOpenAIClient,
+    create_llm_client
 )
 from .error_handler import (
     ErrorHandler,
