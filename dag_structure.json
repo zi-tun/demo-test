@@ -1,0 +1,139 @@
+{
+  "metadata": {
+    "title": "LangGraph Multi-Agent DAG",
+    "description": "Workflow structure for multi-agent orchestration system",
+    "created": "2025-06-26T13:55:44.291140",
+    "type": "langgraph_workflow"
+  },
+  "nodes": [
+    {
+      "id": "supervisor",
+      "type": "agent",
+      "label": "Supervisor Agent",
+      "description": "Intent classification and routing",
+      "entry_point": true
+    },
+    {
+      "id": "research",
+      "type": "agent",
+      "label": "Research Agent",
+      "description": "Information gathering and analysis"
+    },
+    {
+      "id": "code",
+      "type": "agent",
+      "label": "Code Agent",
+      "description": "Programming and script generation"
+    },
+    {
+      "id": "writing",
+      "type": "agent",
+      "label": "Writing Agent",
+      "description": "Content creation and editing"
+    },
+    {
+      "id": "data",
+      "type": "agent",
+      "label": "Data Agent",
+      "description": "Data analysis and visualization"
+    }
+  ],
+  "edges": [
+    {
+      "from": "START",
+      "to": "supervisor",
+      "type": "entry"
+    },
+    {
+      "from": "supervisor",
+      "to": "research",
+      "type": "conditional",
+      "condition": "research_intent"
+    },
+    {
+      "from": "supervisor",
+      "to": "code",
+      "type": "conditional",
+      "condition": "code_intent"
+    },
+    {
+      "from": "supervisor",
+      "to": "writing",
+      "type": "conditional",
+      "condition": "writing_intent"
+    },
+    {
+      "from": "supervisor",
+      "to": "data",
+      "type": "conditional",
+      "condition": "data_intent"
+    },
+    {
+      "from": "supervisor",
+      "to": "END",
+      "type": "conditional",
+      "condition": "general_intent"
+    },
+    {
+      "from": "research",
+      "to": "END",
+      "type": "terminal"
+    },
+    {
+      "from": "code",
+      "to": "END",
+      "type": "terminal"
+    },
+    {
+      "from": "writing",
+      "to": "END",
+      "type": "terminal"
+    },
+    {
+      "from": "data",
+      "to": "END",
+      "type": "terminal"
+    }
+  ],
+  "routing_logic": {
+    "supervisor": {
+      "method": "llm_intent_classification",
+      "routes": {
+        "research": [
+          "research",
+          "search",
+          "information",
+          "find",
+          "lookup"
+        ],
+        "code": [
+          "code",
+          "program",
+          "script",
+          "function",
+          "debug"
+        ],
+        "writing": [
+          "write",
+          "content",
+          "document",
+          "article",
+          "edit"
+        ],
+        "data": [
+          "data",
+          "analyze",
+          "chart",
+          "visualize",
+          "statistics"
+        ],
+        "END": [
+          "general",
+          "conversation",
+          "hello",
+          "help"
+        ]
+      }
+    }
+  }
+}

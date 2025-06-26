@@ -1,0 +1,29 @@
+# LangGraph Multi-Agent Orchestration Dependencies
+
+# Core framework
+langgraph>=0.2.0
+langchain>=0.3.0
+langchain-community>=0.3.0
+langchain-openai>=0.2.0
+
+# Data validation and settings
+pydantic>=2.5.0
+pydantic-settings>=2.1.0
+
+# Environment management
+python-dotenv>=1.0.0
+
+# LLM providers (choose one or both)
+openai>=1.40.0
+anthropic>=0.34.0
+
+# Utilities
+typing-extensions>=4.8.0
+requests>=2.31.0
+
+# Development and testing
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+black>=23.0.0
+flake8>=6.0.0
+mypy>=1.8.0

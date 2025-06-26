@@ -1,0 +1,27 @@
+
+{
+  "inputs": [
+    {
+      "type": "promptString",
+      "id": "jira_token",
+      "description": "Jira api token",
+      "password": false
+    },
+    {
+      "type": "promptString",
+      "id": "jira_username",
+      "description": "Jira username (email)",
+      "password": false
+    },
+  ],
+  "servers": {
+    "mcp-http-stream-server": {
+      "type": "http",
+      "url": "http://localhost:8080/mcp/stream",
+      "headers": {
+        "jira_token": "${input:jira_token}",
+        "jira_username": "${input:jira_username}"
+        }
+    }
+    }
+}
