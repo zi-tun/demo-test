@@ -1,0 +1,23 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run GitHub MCP Server",
+			"type": "shell",
+			"command": "/Users/zitun/githuh-mcp/.venv/bin/python",
+			"args": [
+				"-m",
+				"uvicorn",
+				"src.github_mcp_server.main:app",
+				"--reload",
+				"--host",
+				"0.0.0.0",
+				"--port",
+				"8000"
+			],
+			"group": "build",
+			"isBackground": true,
+			"problemMatcher": []
+		}
+	]
+}

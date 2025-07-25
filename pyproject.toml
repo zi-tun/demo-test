@@ -1,0 +1,61 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "github-mcp-server"
+version = "0.1.0"
+description = "MCP server for GitHub integration using GitHub App authentication"
+authors = [
+    {name = "Your Name", email = "your.email@example.com"}
+]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.104.0",
+    "fastapi-mcp>=0.1.0",
+    "fastmcp>=0.1.0",
+    "uvicorn>=0.24.0",
+    "PyGithub>=2.1.1",
+    "cryptography>=41.0.0",
+    "pydantic>=2.0.0",
+    "python-multipart>=0.0.6",
+    "httpx>=0.25.0",
+    "python-jose[cryptography]>=3.3.0",
+    "PyJWT>=2.8.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "black>=23.0.0",
+    "isort>=5.12.0",
+    "mypy>=1.5.0",
+    "ruff>=0.1.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/github-mcp-server"
+Repository = "https://github.com/yourusername/github-mcp-server"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/github_mcp_server"]
+
+[tool.black]
+line-length = 88
+target-version = ['py39']
+
+[tool.isort]
+profile = "black"
+line_length = 88
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[tool.ruff]
+line-length = 88
+target-version = "py39"
